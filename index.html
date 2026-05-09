@@ -20,8 +20,8 @@
         .lock-box { background: rgba(20, 15, 10, 0.95); padding: 30px; border-radius: 20px; border: 1px solid var(--neon); text-align: center; width: 85%; max-width: 320px; box-shadow: 0 0 25px rgba(255, 157, 0, 0.15); }
         .key-input { width: 100%; padding: 15px; background: #000; border: 1px solid var(--neon); border-radius: 12px; color: var(--neon); text-align: center; font-size: 26px; letter-spacing: 4px; margin-top: 20px; outline: none; }
 
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: rgba(0,0,0,0.85); border-bottom: 1px solid var(--border); }
-        #clock { color: var(--neon); font-family: monospace; font-size: 14px; font-weight: bold; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--border); font-family: monospace; font-size: 11px; }
+        .clocks { display: flex; gap: 15px; color: var(--neon); }
 
         .nav-bar { position: fixed; bottom: 0; width: 100%; background: rgba(15, 12, 10, 0.98); display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--border); z-index: 5000; padding-bottom: env(safe-area-inset-bottom); }
         .nav-item { padding: 18px 2px; font-size: 9px; font-weight: bold; text-align: center; cursor: pointer; color: #64748b; text-transform: uppercase; }
@@ -33,27 +33,31 @@
         input, select { width: 100%; padding: 14px; background: #000; border: 1px solid var(--border); border-radius: 10px; color: white; margin-top: 10px; box-sizing: border-box; font-size: 14px; outline: none; }
         .btn-main { width: 100%; padding: 18px; background: var(--neon); border: none; border-radius: 14px; color: #000; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
 
-        /* Style FAQ */
         .faq-item { border-bottom: 1px solid var(--border); padding: 10px 0; cursor: pointer; }
         .faq-question { font-size: 13px; color: var(--neon); font-weight: bold; display: flex; justify-content: space-between; }
         .faq-answer { font-size: 12px; color: #cbd5e1; padding-top: 8px; display: none; line-height: 1.4; }
+        
+        .member-line { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div id="lock-screen">
         <div class="lock-box">
-            <div style="color: var(--gold); font-size: 12px; text-transform: uppercase;">Labo SANGMELIMA</div>
-            <div style="color: var(--neon); font-size: 20px; font-weight: bold; margin-top: 5px;">IFDA SPOT H4</div>
+            <div style="color: var(--gold); font-size: 10px; text-transform: uppercase;">SANGMELIMA SHIELD</div>
+            <div style="color: var(--neon); font-size: 20px; font-weight: bold; margin-top: 5px;">BLACKSNIPER SPOT</div>
             <input type="password" id="master-key" class="key-input" placeholder="••••••" maxlength="6">
-            <button onclick="checkKey()" class="btn-main">DÉVERROUILLER</button>
+            <button onclick="checkKey()" class="btn-main">ACCÈS LABO</button>
         </div>
     </div>
 
     <div id="main-app" style="display:none;">
         <div class="top-bar">
-            <div id="clock">00:00:00</div>
-            <div style="font-size: 10px; color: var(--neon); font-weight: bold;">SPOT ENGINE v1.0</div>
+            <div class="clocks">
+                <div>CMR: <span id="clock-cmr">00:00:00</span></div>
+                <div>NYC: <span id="clock-nyc">00:00:00</span></div>
+            </div>
+            <div style="color: var(--gold); font-weight: bold;">SPOT ENGINE v1.0</div>
         </div>
 
         <div class="content-area">
@@ -62,7 +66,6 @@
                 <div class="glass-card">
                     <span id="engine-status" style="color:var(--red); font-size:10px;">● ENGINE STANDBY</span>
                     <div style="display:flex; justify-content:space-around; margin:25px 0; text-align:center;">
-                        <!-- CHANGÉ ICI : PAR DÉFAUT À 0 -->
                         <div><small style="color: #64748b;">ACHAT FIXE</small><div id="display-cap" style="font-size:26px; color:var(--neon); font-weight:bold;">$0.00</div></div>
                         <div><small style="color: #64748b;">TIMEFRAME</small><div style="font-size:26px; color:var(--green); font-weight:bold;">H4/H1/M30</div></div>
                     </div>
@@ -84,8 +87,8 @@
                     <select id="ex-id">
                         <option value="bingx">BingX</option>
                         <option value="mexc">MEXC Global</option>
-                        <option value="okx">OKX</option><option value="binance">BINANCE</option><option value="bybit">BYBIT</option><option value="gate io">gate io</option><option value="lbank">LBANK</option><option value="kucoin">KUCOIN</option>
-                 </select>
+                        <option value="okx">OKX</option><option value="binance">BINANCE</option><option value="gate io">GATE IO</option><option value="coinbase">COINBASE</option><option value="kucoin">KUCOIN</option><option value="kraken">KRAKEN</option><option value="lbank">LBANK</option>
+                    </select>
 
                     <input type="text" id="api-key" placeholder="API KEY">
                     <input type="password" id="api-secret" placeholder="API SECRET">
@@ -95,61 +98,27 @@
                 </div>
             </div>
 
-            <!-- FAQ SECTION -->
+            <!-- MACRO NEWS -->
+            <div id="news" class="tab-content" style="display:none;">
+                <div class="glass-card" style="height: 450px; padding: 0; overflow: hidden;">
+                    <iframe src="https://sslecal2.investing.com?importance=2,3&countries=5&timeZone=58&lang=5" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+
+            <!-- FAQ -->
             <div id="faq" class="tab-content" style="display:none;">
                 <div class="glass-card">
                     <h3 style="color:var(--neon); margin-top:0;">F.A.Q - SUPPORT</h3>
-                    
-                    <div class="faq-item" onclick="toggleFaq(0)">
-                        <div class="faq-question"><span>1. Quel est le dépôt minimum ?</span><span>+</span></div>
-                        <div class="faq-answer">Le dépôt minimum conseillé est de 10 USDT sur votre compte Spot pour permettre au robot d'exécuter les ordres.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(1)">
-                        <div class="faq-question"><span>2. Comment lier mon API ?</span><span>+</span></div>
-                        <div class="faq-answer">Générez une clé API sur BingX ou MEXC avec les permissions "Spot Trading" activées, puis collez-les dans l'onglet AUTO.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(2)">
-                        <div class="faq-question"><span>3. Quelles cryptos sont analysées ?</span><span>+</span></div>
-                        <div class="faq-answer">Le robot scanne 50 actifs majeurs dans les narratives IA, RWA et DePIN pour une accumulation stratégique.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(3)">
-                        <div class="faq-question"><span>4. Est-ce sécurisé ?</span><span>+</span></div>
-                        <div class="faq-answer">Oui. Le robot ne peut pas retirer vos fonds. Il a seulement l'autorisation d'acheter et de vendre sur votre compte.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(4)">
-                        <div class="faq-question"><span>5. Pourquoi H4/H1/M30 ?</span><span>+</span></div>
-                        <div class="faq-answer">C'est une stratégie en cascade : le robot cherche d'abord des signaux forts en 4h, puis descend en 1h et 30m si nécessaire.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(5)">
-                        <div class="faq-question"><span>6. Puis-je arrêter le robot ?</span><span>+</span></div>
-                        <div class="faq-answer">Oui, utilisez le bouton "ARRÊT D'URGENCE" sur le Dashboard pour stopper immédiatement toutes les analyses.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(6)">
-                        <div class="faq-question"><span>7. Qu'est-ce que le CRT ?</span><span>+</span></div>
-                        <div class="faq-answer">Le Candle Range Theory analyse les balayages (sweeps) de liquidité pour acheter au meilleur prix institutionnel.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(7)">
-                        <div class="faq-question"><span>8. Où sont mes profits ?</span><span>+</span></div>
-                        <div class="faq-answer">Vos profits restent sur votre portefeuille Spot. Le robot accumule les jetons directement sur votre compte.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(8)">
-                        <div class="faq-question"><span>9. Support Telegram ?</span><span>+</span></div>
-                        <div class="faq-answer">Toutes les notifications d'achat sont envoyées en temps réel sur votre canal Telegram configuré.</div>
-                    </div>
-
-                    <div class="faq-item" onclick="toggleFaq(9)">
-                        <div class="faq-question"><span>10. Frais de service ?</span><span>+</span></div>
-                        <div class="faq-answer">Le robot BLACKSNIPER est un outil interne du labo Sangmelima. Aucun frais n'est prélevé sur vos trades.</div>
-                    </div>
-
+                    <div class="faq-item" onclick="toggleFaq(0)"><div class="faq-question"><span>1. Quel dépôt minimum ?</span><span>+</span></div><div class="faq-answer">10 USDT minimum sur compte Spot BingX/MEXC.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(1)"><div class="faq-question"><span>2. Comment lier l'API ?</span><span>+</span></div><div class="faq-answer">Générez une clé API avec accès "Spot Trading" uniquement.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(2)"><div class="faq-question"><span>3. Cryptos analysées ?</span><span>+</span></div><div class="faq-answer">Le robot scanne 50 actifs (IA, RWA, DePIN) en rotation.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(3)"><div class="faq-question"><span>4. Sécurité ?</span><span>+</span></div><div class="faq-answer">Le robot ne peut pas retirer. Accès limité au trading.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(4)"><div class="faq-question"><span>5. Pourquoi la cascade ?</span><span>+</span></div><div class="faq-answer">Pour capturer la liquidité H4, puis H1, puis M30 si besoin.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(5)"><div class="faq-question"><span>6. Arrêt d'urgence ?</span><span>+</span></div><div class="faq-answer">Le bouton rouge coupe instantanément le moteur Python.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(6)"><div class="faq-question"><span>7. C'est quoi le Sweep ?</span><span>+</span></div><div class="faq-answer">C'est le nettoyage institutionnel d'un niveau avant l'achat.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(7)"><div class="faq-question"><span>8. Où sont mes gains ?</span><span>+</span></div><div class="faq-answer">Directement sur votre portefeuille Spot, disponibles 24/7.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(8)"><div class="faq-question"><span>9. Notifications ?</span><span>+</span></div><div class="faq-answer">Alertes instantanées sur Telegram pour chaque achat.</div></div>
+                    <div class="faq-item" onclick="toggleFaq(9)"><div class="faq-question"><span>10. Frais ?</span><span>+</span></div><div class="faq-answer">Outil interne du Labo. Zéro frais sur les performances.</div></div>
                 </div>
             </div>
 
@@ -158,9 +127,9 @@
                 <div class="glass-card">
                     <h3 style="color:var(--neon); margin-top:0;">CORE TEAM</h3>
                     <div class="member-line"><span>Nasser</span><span style="color:var(--neon);">DEV CHEF</span></div>
-                    <div class="member-line"><span>Bertrand</span><span style="color:var(--neon);">TECH</span></div>
-                    <div class="member-line"><span>Sébastien</span><span style="color:var(--neon);">COACH SMC</span></div>
-                    <div class="member-line"><span>Albert</span><span style="color:var(--neon);">LEADER</span></div>
+                    <div class="member-line"><span>Franco</span><span style="color:var(--neon);">ANALYSTE</span></div><div class="member-line"><span>Abednego</span><span style="color:var(--neon);">RÉSEAUTAGE</span></div><div class="member-line"><span>Béatrice</span><span style="color:var(--neon);">MANAGER</span></div><div class="member-line"><span>Marie</span><span style="color:var(--neon);">MARKETING</span></div><div class="member-line"><span>Bertrand</span><span style="color:var(--neon);">TECH.SUPERIOR</span></div><div class="member-line"><span>Eva</span><span style="color:var(--neon);">TRADER PRO</span></div>
+                    <div class="member-line"><span>Sébastien</span><span style="color:var(--neon);">COACH- TRADER SMC</span></div>
+                    <div class="member-line"><span>Albert</span><span style="color:var(--neon);">DEV.ALGO</span></div>
                 </div>
             </div>
         </div>
@@ -168,6 +137,7 @@
         <div class="nav-bar">
             <div class="nav-item active" onclick="setTab('dash', this)">DASH</div>
             <div class="nav-item" onclick="setTab('config', this)">AUTO</div>
+            <div class="nav-item" onclick="setTab('news', this)">NEWS</div>
             <div class="nav-item" onclick="setTab('faq', this)">FAQ</div>
             <div class="nav-item" onclick="setTab('team', this)">TEAM</div>
         </div>
@@ -183,16 +153,24 @@
             }
         }
 
+        function updateClocks() {
+            const now = new Date();
+            const cmrTime = now.toLocaleTimeString('fr-FR', { timeZone: 'Africa/Douala' });
+            const nycTime = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false });
+            document.getElementById('clock-cmr').innerText = cmrTime;
+            document.getElementById('clock-nyc').innerText = nycTime;
+        }
+        setInterval(updateClocks, 1000);
+
         function toggleFaq(index) {
             const answers = document.querySelectorAll('.faq-answer');
-            const current = answers[index].style.display;
-            answers[index].style.display = current === 'block' ? 'none' : 'block';
+            answers[index].style.display = answers[index].style.display === 'block' ? 'none' : 'block';
         }
 
         function startSpot() {
             const qty = document.getElementById('trade-qty').value;
-            if(!qty || qty < 10) { alert("Minimum 10 USDT requis"); return; }
-
+            if(!qty || qty < 10) { alert("Minimum 10 USDT"); return; }
+            
             const data = {
                 action: 'start',
                 exchange: document.getElementById('ex-id').value,
@@ -202,11 +180,7 @@
                 qty: qty
             };
 
-            fetch(`${API_URL}/toggle_bot`, { 
-                method: 'POST', 
-                headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify(data) 
-            })
+            fetch(`${API_URL}/toggle_bot`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) })
             .then(() => {
                 document.getElementById('engine-status').style.color = "var(--green)";
                 document.getElementById('engine-status').innerText = "● ENGINE ACTIVE";
@@ -230,9 +204,7 @@
             document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active')); 
             el.classList.add('active'); 
         }
-
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     </script>
 </body>
-    </html>
-        
+                    </html>
+                                                                                                                                                                                                                            
